@@ -1,0 +1,30 @@
+{
+  "name": "goal-quest-api",
+  "version": "1.0.0",
+  "description": "An API for our Qoal Quest app- An app to self-learn skills without human assistance",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "mocha test/** --exit", 
+    "start": "node server",
+    "dev": "nodemon server",
+    "data:import": "node seeder",
+    "data:destroy": "node seeder -d"
+  },
+  "author": "Idrees Awan",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "colors": "^1.4.0",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-async-handler": "^1.2.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.0.12"
+  },
+  "devDependencies": {
+    "mocha": "^9.1.3",
+    "nodemon": "^2.0.14",
+    "supertest": "^6.1.6"
+  }
+}
