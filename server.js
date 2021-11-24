@@ -8,7 +8,11 @@ import { notFound, errorHandler } from './middlewares/errorMiddleware.js'
 import userRoutes from './routes/userRoutes.js'
 
 dotenv.config()
-connectDB()
+import config from './config/index.js' //loads config based on our NODE_ENV
+const { PORT, MONGO_URI } = config
+
+// for testing create in-memory database and connect to it!
+process.env.NODE_ENV !== 'test' ? connectDB(MONGO_URI) : ''
 
 const app = express()
 app.use(cors())
@@ -23,7 +27,6 @@ app.use('/api/users', userRoutes)
 app.use(notFound)
 app.use(errorHandler)
 
-const PORT = process.env.PORT || 5000
 app.listen(
     PORT,
     console.log(
