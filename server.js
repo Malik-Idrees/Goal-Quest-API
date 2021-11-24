@@ -9,12 +9,14 @@ import userRoutes from './routes/userRoutes.js'
 
 dotenv.config()
 import config from './config/index.js' //loads config based on our NODE_ENV
+
 const { PORT, MONGO_URI } = config
 
 // for testing create in-memory database and connect to it!
 process.env.NODE_ENV !== 'test' ? connectDB(MONGO_URI) : ''
 
 const app = express()
+
 app.use(cors())
 app.use(express.json())
 

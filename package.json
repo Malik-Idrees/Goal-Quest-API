@@ -5,8 +5,8 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "test": "cross-env NODE_ENV=test && mocha test/** --timeout 10000ms  --exit",
-    "test-single": "cross-env NODE_ENV=test && mocha --timeout 10000ms --exit",
+    "test": "cross-env NODE_ENV=test mocha test/** --timeout 10000ms  --exit",
+    "test-single": "cross-env NODE_ENV=test mocha --timeout 10000ms --exit",
     "start": "cross-env NODE_ENV=production node server",
     "dev": "cross-env NODE_ENV=development nodemon server",
     "data:import": "node seeder",
