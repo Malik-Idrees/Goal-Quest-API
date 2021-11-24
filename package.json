@@ -5,9 +5,10 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "test": "mocha test/** --exit", 
-    "start": "node server",
-    "dev": "nodemon server",
+    "test": "cross-env NODE_ENV=test && mocha test/** --timeout 10000ms  --exit",
+    "test-single": "cross-env NODE_ENV=test && mocha --timeout 10000ms --exit",
+    "start": "cross-env NODE_ENV=production node server",
+    "dev": "cross-env NODE_ENV=development nodemon server",
     "data:import": "node seeder",
     "data:destroy": "node seeder -d"
   },
@@ -16,6 +17,8 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",
+    "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-async-handler": "^1.2.0",
