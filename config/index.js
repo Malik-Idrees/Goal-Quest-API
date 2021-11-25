@@ -4,6 +4,7 @@ dotenv.config()
 const env = process.env.NODE_ENV // 'development' or 'production' or 'test'
 
 const development = {
+    NODE_ENV: env,
     MONGO_URI: process.env.MONGO_URI_TEST || '',
     PORT: parseInt(process.env.DEV_PORT) || 5000,
 
@@ -15,11 +16,13 @@ const development = {
 }
 
 const production = {
+    NODE_ENV: env,
     MONGO_URI: process.env.MONGO_URI || '',
     PORT: parseInt(process.env.PORT) || 5000,
 }
 
 const test = {
+    NODE_ENV: env,
     MONGO_URI: '',
     PORT: parseInt(process.env.DEV_PORT) || 5000,
 }

@@ -2,6 +2,7 @@ import express from 'express'
 import dotenv from 'dotenv'
 import colors from 'colors'
 import cors from 'cors'
+import morgan from 'morgan'
 import connectDB from './config/db.js'
 
 import { notFound, errorHandler } from './middlewares/errorMiddleware.js'
@@ -10,13 +11,16 @@ import userRoutes from './routes/userRoutes.js'
 dotenv.config()
 import config from './config/index.js' //loads config based on our NODE_ENV
 
-const { PORT, MONGO_URI } = config
+const { PORT, MONGO_URI, NODE_ENV } = config
 
 // for testing create in-memory database and connect to it!
-process.env.NODE_ENV !== 'test' ? connectDB(MONGO_URI) : ''
+if (NODE_ENV !== 'test') connectDB(MONGO_URI)
 
 const app = express()
 
+if (NODE_ENV === 'development') {
+    app.use(morgan('dev'))
+}
 app.use(cors())
 app.use(express.json())
 
@@ -31,9 +35,7 @@ app.use(errorHandler)
 
 app.listen(
     PORT,
-    console.log(
-        `Server running on ${PORT} in ${process.env.NODE_ENV}`.yellow.bold
-    )
+    console.log(`Server running on ${PORT} in ${NODE_ENV}`.yellow.bold)
 )
 
 export default app
