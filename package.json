@@ -5,7 +5,7 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "test": "cross-env NODE_ENV=test mocha test/** --timeout 10000ms  --exit",
+    "test": "cross-env NODE_ENV=test mocha --timeout 120s --exit",
     "test-single": "cross-env NODE_ENV=test mocha --timeout 10000ms --exit",
     "start": "cross-env NODE_ENV=production node server",
     "dev": "cross-env NODE_ENV=development nodemon server",
@@ -23,6 +23,7 @@
     "express": "^4.17.1",
     "express-async-handler": "^1.2.0",
     "jsonwebtoken": "^8.5.1",
+    "mongodb-memory-server": "^8.0.3",
     "mongoose": "^6.0.12",
     "morgan": "^1.10.0"
   },
