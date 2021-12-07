@@ -19,6 +19,7 @@ describe('GET /api/users/profile', function () {
     before('creating user for profile testing', async () => {
         await createUser()
         await login(auth)
+        await createUserProfile(auth)
     })
 
     it('should require authorization', function (done) {
@@ -61,6 +62,19 @@ const createUser = async () => {
             name: 'Robo',
             email: 'robo@example.com',
             password: '123456',
+        })
+        .expect(201)
+}
+
+const createUserProfile = async (auth) => {
+    const res = await request
+        .post('/api/users/profile')
+        .set('Authorization', 'Bearer ' + auth.token)
+        .send({
+            profession: 'Software Engineer',
+            goalToAchieve: 'Data Engineer',
+            expertiseLevel: 'Beginner',
+            dailyTime: '2 Hours',
         })
         .expect(201)
 }
