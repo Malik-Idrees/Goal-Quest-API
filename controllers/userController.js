@@ -25,6 +25,7 @@ const authUser = asyncHandler(async (req, res) => {
     }
 })
 
+
 // @desc     Register a user
 // @route    POST /api/users
 // @access   Public
@@ -58,24 +59,31 @@ const registerUser = asyncHandler(async (req, res) => {
     }
 })
 
+
 //@desc     Get user profile
 //@route    GET /api/users/profile
 //@access   Private
 const getUserProfile = asyncHandler(async (req, res) => {
-    const user = await User.findById(req.user._id)
+    const currentUser = req.user
 
-    if (user) {
-        res.json({
-            _id: user._id,
-            name: user.name,
-            email: user.email,
-            isAdmin: user.isAdmin,
+    const userProfileData = await UserProfile.findOne({
+        // user: { _id: currentUser._id }
+        currentUser,
+    })
+    .populate("user")
+
+    if (userProfileData) {
+        res.status(200).json({
+            // username: userProfileData.user.name,
+            // email: userProfileData.user.email
+            userProfileData
         })
     } else {
         res.status(404)
         throw new Error('User not found')
     }
 })
+
 
 //@desc     Create user profile
 //@route    POST /api/users/profile
