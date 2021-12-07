@@ -11,12 +11,17 @@ const userProfileSchema = mongoose.Schema(
             type: String,
             required: true,
         },
-        level: {
+        goalToAchieve: {
             type: String,
             required: true,
-            default: 'beginner',
         },
-        weekltime: {
+        expertiseLevel: {
+            type: String,
+            required: true,
+            default: 'Beginner',
+            enum: ['beginner', 'intermediate', 'expert'],
+        },
+        dailyTime: {
             type: String,
             required: true,
         },
@@ -26,6 +31,6 @@ const userProfileSchema = mongoose.Schema(
     }
 )
 
-const userProfile = mongoose.model('UserProfile', userProfileSchema)
+const UserProfile = mongoose.model('UserProfile', userProfileSchema)
 
-export default userProfile
+export default UserProfile

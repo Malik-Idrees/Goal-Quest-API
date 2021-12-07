@@ -1,5 +1,6 @@
 import asyncHandler from 'express-async-handler'
 import User from '../models/userModel.js'
+import UserProfile from '../models/userProfileModel.js'
 import generateToken from '../utils/generateToken.js'
 
 // @desc      Auth user & get token
@@ -58,7 +59,7 @@ const registerUser = asyncHandler(async (req, res) => {
 })
 
 //@desc     Get user profile
-//@route    POST /api/users/profile
+//@route    GET /api/users/profile
 //@access   Private
 const getUserProfile = asyncHandler(async (req, res) => {
     const user = await User.findById(req.user._id)
@@ -74,6 +75,35 @@ const getUserProfile = asyncHandler(async (req, res) => {
         res.status(404)
         throw new Error('User not found')
     }
+})
+
+//@desc     Create user profile
+//@route    POST /api/users/profile
+//@access   Private
+const createUserProfile = asyncHandler(async (req, res) => {
+    const { profession, goalToAchieve, expertiseLevel, dailyTime } = req.body
+
+    const currentUser = req.user
+
+    const profileExist = await UserProfile.findOne({
+        user: { _id: currentUser._id },
+    })
+
+    let profile
+
+    if (!profileExist) {
+        profile = await UserProfile.create({
+            user: currentUser._id,
+            profession,
+            goalToAchieve,
+            expertiseLevel: expertiseLevel.toLowerCase(),
+            dailyTime,
+        })
+        return res.status(201).json(profile)
+    }
+
+    res.status(404)
+    throw new Error('Profile Already Exists')
 })
 
 // @desc    Update user profile
@@ -104,4 +134,10 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     }
 })
 
-export { authUser, registerUser, getUserProfile, updateUserProfile }
+export {
+    authUser,
+    registerUser,
+    getUserProfile,
+    createUserProfile,
+    updateUserProfile,
+}
